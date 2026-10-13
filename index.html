@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Битрикс24 для проката ретро-автомобилей</title>
+<meta name="description" content="Битрикс24 собирает все заявки в один календарь. Свадьбы и фотосессии без хаоса в бронированиях.">
+<style>
+/* ===== Шрифты ===== */
+@font-face { font-family: 'TT Travels'; src: url('fonts/TT-Travels-Text-ExtraBold.ttf') format('truetype'); font-weight: 800; font-display: swap; }
+@font-face { font-family: 'TT Travels'; src: url('fonts/TT-Travels-Text-Bold.ttf') format('truetype'); font-weight: 700; font-display: swap; }
+@font-face { font-family: 'TT Travels'; src: url('fonts/TT-Travels-Text-Medium.ttf') format('truetype'); font-weight: 500; font-display: swap; }
+@font-face { font-family: 'TT Commons Pro'; src: url('fonts/TT_Commons_Pro_Medium.woff2') format('woff2'); font-weight: 500; font-display: swap; }
+@font-face { font-family: 'TT Commons Pro'; src: url('fonts/TT_Commons_Pro_DemiBold.woff2') format('woff2'); font-weight: 600; font-display: swap; }
+@font-face { font-family: 'TT Commons Pro'; src: url('fonts/TT_Commons_Pro_Bold.woff2') format('woff2'); font-weight: 700; font-display: swap; }
+
+/* ===== Переменные ===== */
+:root {
+  --blue: #006DFF;
+  --blue-dark: #143AFF;
+  --sky: #08A6FF;
+  --sky-light: #A5E4FF;
+  --sky-bg: #DEF3FF;
+  --lime: #CCF31E;
+  --ink: #12112F;
+  --white: #FFFFFF;
+  --gradient: linear-gradient(90deg, #143AFF 0%, #006DFF 33%, #08A6FF 66%, #A5E4FF 100%);
+  --shadow: 0 2px 12px rgba(18, 17, 47, 0.06);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'TT Commons Pro', 'Segoe UI', Roboto, Arial, sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 1.55;
+  color: var(--ink);
+  background: var(--white);
+  -webkit-font-smoothing: antialiased;
+}
+img, svg { max-width: 100%; display: block; }
+strong, b { font-weight: 600; }
+
+h1, h2, h3 { font-family: 'TT Travels', 'Segoe UI', Arial, sans-serif; line-height: 1.12; }
+h1 { font-weight: 800; font-size: 52px; letter-spacing: -0.02em; }
+h2 { font-weight: 700; font-size: 44px; letter-spacing: -0.015em; }
+h3 { font-weight: 700; font-size: 24px; }
+
+.container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+section { padding: 112px 0; }
+.section-title { text-align: center; margin-bottom: 64px; }
+
+/* ===== Кнопки ===== */
+.btn {
+  display: inline-block;
+  font-family: 'TT Commons Pro', 'Segoe UI', Arial, sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  padding: 18px 32px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--lime);
+  color: var(--ink);
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn:active { transform: translateY(0); }
+.btn:focus-visible { outline: 3px solid var(--white); outline-offset: 3px; }
+
+/* ===== 1. Hero ===== */
+.hero { background: var(--gradient); color: var(--white); padding: 40px 0 112px; overflow: hidden; }
+.hero .logo { height: 36px; width: auto; margin-bottom: 80px; }
+.hero-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 48px; align-items: center; }
+.hero h1 { margin-bottom: 24px; max-width: 16ch; }
+.hero p { font-size: 22px; max-width: 540px; margin-bottom: 40px; opacity: .95; }
+.hero-visual { position: relative; }
+.hero-visual img {
+  width: 100%;
+  height: auto;
+  border-radius: 24px;
+}
+
+/* ===== 2. Проблемы ===== */
+.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+.card {
+  background: var(--white);
+  border-radius: 20px;
+  padding: 36px 32px;
+  border: 1px solid rgba(0, 109, 255, 0.06);
+  box-shadow: var(--shadow);
+}
+.card h3 { margin-bottom: 14px; }
+.card p { opacity: .8; }
+
+/* ===== 3. Решение ===== */
+.solution { background: var(--sky-bg); }
+
+.icon {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 24px;
+}
+
+.icon img {
+  width: 48px;
+  height: 48px;
+}
+
+.solution .card { border: 0; }
+
+/* ===== 4. Демонстрация ===== */
+.demo-wrap { max-width: 960px; margin: 0 auto; }
+
+.demo-stage {
+  position: relative;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.mockup-laptop {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.mockup-phone {
+  position: absolute;
+  z-index: 3;
+  bottom: -4%;
+  right: -6%;
+  width: 24%;
+  height: auto;
+  display: block;
+}
+
+.demo-screen--laptop {
+  position: absolute;
+  z-index: 2;
+  top: 5%;
+  left: 9%;
+  right: 9%;
+  bottom: 9%;
+  background: #F8FBFF;
+  border-radius: 4px;
+  padding: 2% 2.5%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 3%;
+  font-family: 'TT Commons Pro', 'Segoe UI', sans-serif;
+}
+.ds-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 2%;
+  border-bottom: 1px solid rgba(0, 109, 255, 0.12);
+  font-size: 12px;
+}
+.ds-title { font-weight: 700; color: var(--ink); }
+.ds-dots { display: flex; gap: 4px; }
+.ds-dots i { width: 6px; height: 6px; border-radius: 50%; background: rgba(0, 109, 255, 0.25); }
+.ds-week {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  font-size: 10px;
+  color: #6b7894;
+  font-weight: 600;
+  text-align: center;
+}
+.ds-rows {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 4px;
+  flex: 1;
+}
+.ds-event {
+  border-radius: 4px;
+  padding: 6px 9px;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: #fff;
+  display: flex;
+  align-items: flex-start;
+  overflow: hidden;
+}
+.ds-event.blue   { background: #006DFF; }
+.ds-event.lime   { background: #9AC416; color: var(--ink); }
+.ds-event.purple { background: #BE52FF; }
+
+.demo-screen--phone {
+  position: absolute;
+  z-index: 4;
+  top: 15%;
+  left: 83%;
+  width: 22%;
+  bottom: 0%;
+  background: #F8FBFF;
+  border-radius: 14% / 6%;
+  padding: 8% 7%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 5%;
+  font-family: 'TT Commons Pro', 'Segoe UI', sans-serif;
+}
+.dp-top {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--ink);
+  padding-bottom: 8%;
+  border-bottom: 1px solid rgba(0, 109, 255, 0.12);
+}
+.dp-card {
+  border-radius: 4px;
+  padding: 7px 9px;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.25;
+  color: #fff;
+  overflow: hidden;
+}
+.dp-card.blue   { background: #006DFF; }
+.dp-card.lime   { background: #9AC416; color: var(--ink); }
+.dp-card.purple { background: #BE52FF; }
+
+.demo-caption { text-align: center; margin-top: 24px; color: #5a6b83; font-size: 16px; }
+
+/* ===== 5. Цифры ===== */
+.numbers { background: var(--blue); color: var(--white); padding: 96px 0; }
+.numbers-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; text-align: center; }
+.big { font-family: 'TT Travels', sans-serif; font-weight: 800; font-size: 80px; line-height: 1; letter-spacing: -0.02em; margin-bottom: 12px; }
+.numbers-grid p { font-size: 20px; opacity: .9; }
+
+/* ===== 6. Отзывы ===== */
+.reviews-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; }
+.review { padding: 40px; }
+.review blockquote { font-size: 20px; line-height: 1.55; margin-bottom: 28px; }
+.review .who { font-weight: 600; }
+.review .who span { display: block; font-weight: 500; opacity: .6; font-size: 16px; margin-top: 2px; }
+
+/* ===== 7. CTA-форма ===== */
+.cta { background: var(--gradient); color: var(--white); }
+.cta-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 56px; align-items: center; }
+.cta h2 { margin-bottom: 20px; }
+.cta .lead { font-size: 21px; opacity: .95; }
+.form-card {
+  background: var(--white); color: var(--ink);
+  border-radius: 24px; padding: 40px;
+}
+.field { margin-bottom: 20px; }
+.field label { display: block; font-weight: 600; font-size: 15px; margin-bottom: 8px; }
+.field input {
+  width: 100%; font: inherit; font-size: 18px;
+  padding: 16px 18px; border-radius: 12px;
+  border: 2px solid #D5E3F5; background: #F8FBFF; color: var(--ink);
+  transition: border-color .15s ease;
+}
+.field input:focus { outline: none; border-color: var(--blue); background: var(--white); }
+.field.error input { border-color: #E5384B; }
+.field .msg { display: none; color: #E5384B; font-size: 14px; margin-top: 6px; }
+.field.error .msg { display: block; }
+.form-card .btn { width: 100%; }
+.thanks { display: none; text-align: center; padding: 24px 0; }
+.thanks .check {
+  width: 72px; height: 72px; border-radius: 50%;
+  background: var(--lime); margin: 0 auto 24px;
+  display: flex; align-items: center; justify-content: center; font-size: 34px; font-weight: 700;
+}
+.thanks h3 { font-size: 30px; margin-bottom: 10px; }
+.thanks p { opacity: .7; }
+.form-card.done form { display: none; }
+.form-card.done .thanks { display: block; }
+
+/* ===== 8. Футер ===== */
+footer { background: var(--ink); color: var(--white); padding: 64px 0 40px; }
+.footer-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 32px; flex-wrap: wrap; padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,.12); }
+.footer-brand { display: flex; flex-direction: column; gap: 10px; }
+footer .logo { height: 32px; width: auto; }
+.footer-slogan { font-size: 14px; opacity: .7; }
+.contacts { display: flex; flex-direction: column; gap: 8px; }
+.contacts a, .socials a { color: var(--white); text-decoration: none; opacity: .85; }
+.contacts a:hover, .socials a:hover { opacity: 1; text-decoration: underline; }
+.socials { display: flex; gap: 24px; }
+.copy { padding-top: 28px; font-size: 15px; opacity: .55; }
+
+/* ===== Адаптив ===== */
+@media (max-width: 768px) {
+  body { font-size: 17px; }
+  h1 { font-size: 34px; }
+  h2 { font-size: 30px; }
+  h3 { font-size: 21px; }
+  section { padding: 72px 0; }
+  .section-title { margin-bottom: 40px; }
+  .hero { padding: 28px 0 72px; }
+  .hero .logo { height: 30px; margin-bottom: 48px; }
+  .hero-grid, .cta-grid { grid-template-columns: 1fr; gap: 40px; }
+  .hero h1 { max-width: none; }
+  .hero p { font-size: 19px; margin-bottom: 32px; }
+  .cards, .reviews-grid, .numbers-grid { grid-template-columns: 1fr; }
+  .card { padding: 28px 24px; }
+  .numbers { padding: 72px 0; }
+  .big { font-size: 60px; }
+  .review { padding: 28px 24px; }
+  .review blockquote { font-size: 18px; }
+
+  .mockup-phone { width: 26%; right: -4%; bottom: -3%; }
+  .demo-screen--phone {
+    top: 7%;
+    left: 79%;
+    width: 24%;
+    bottom: 0%;
+    padding: 4% 3%;
+    gap: 3%;
+  }
+
+  .ds-top { font-size: 11px; }
+  .ds-title { font-size: 11px; }
+  .ds-week { font-size: 9px; }
+  .ds-event { font-size: 10px; padding: 5px 6px; border-radius: 3px; }
+
+  .dp-top { font-size: 10px; padding-bottom: 5%; }
+  .dp-card { font-size: 10px; padding: 5px 6px; border-radius: 3px; }
+
+  .form-card { padding: 28px 22px; }
+  .btn { width: 100%; text-align: center; }
+  .footer-top { flex-direction: column; }
+}
+</style>
+</head>
+<body>
+
+<!-- 1. HERO -->
+<header class="hero">
+  <div class="container">
+    <img class="logo" src="img/logo-white.svg" alt="Битрикс24">
+    <div class="hero-grid">
+      <div>
+        <h1>Две свадьбы на одну дату — знакомо?</h1>
+        <p>Битрикс24 собирает все брони в один календарь.</p>
+        <a href="#demo" class="btn">Записаться на демо</a>
+      </div>
+      <div class="hero-visual">
+        <img src="img/hero-car.jpg" alt="Ретро-автомобиль на свадьбе">
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- 2. ПРОБЛЕМЫ -->
+<section class="problem">
+  <div class="container">
+    <div class="section-title"><h2>Что мешает работать</h2></div>
+    <div class="cards">
+      <article class="card">
+        <h3>Всё в разных местах</h3>
+        <p>Звонки, мессенджеры, соцсети - половина заявок теряется</p>
+      </article>
+      <article class="card">
+        <h3>Путаница с датами</h3>
+        <p>Две пары на один день? Или машина в ремонте, а бронь уже стоит</p>
+      </article>
+      <article class="card">
+        <h3>Клиенты пропадают</h3>
+        <p>Забронировали, а накануне свадьбы не берут трубку. Или вообще передумали</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- 3. РЕШЕНИЕ -->
+<section class="solution">
+  <div class="container">
+    <div class="section-title"><h2>Как это решает Битрикс24</h2></div>
+    <div class="cards">
+      <article class="card">
+        <div class="icon"><img src="img/icon-calendar.svg" alt=""></div>
+        <h3>Бронирование ресурсов</h3>
+        <p>Каждая машина - отдельная единица. Система не даст назначить её дважды</p>
+      </article>
+      <article class="card">
+        <div class="icon"><img src="img/icon-tasks.svg" alt=""></div>
+        <h3>CRM-календарь</h3>
+        <p>Расписание всего парка - на одном экране</p>
+      </article>
+      <article class="card">
+        <div class="icon"><img src="img/icon-bell.svg" alt=""></div>
+        <h3>Роботы-напоминания</h3>
+        <p>За 3 дня до свадьбы придёт автоматическое напоминание. Меньше неявок</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- 4. ДЕМОНСТРАЦИЯ -->
+<section id="demo">
+  <div class="container">
+    <div class="section-title"><h2>Так это выглядит в Битрикс24</h2></div>
+    <div class="demo-wrap">
+      <div class="demo-stage">
+        <img class="mockup-laptop" src="img/mockup-laptop.svg" alt="">
+        <img class="mockup-phone" src="img/mockup-phone.svg" alt="">
+        <div class="demo-screen demo-screen--laptop" aria-hidden="true">
+          <div class="ds-top">
+            <span class="ds-title">Бронирования · Октябрь</span>
+            <span class="ds-dots"><i></i><i></i><i></i></span>
+          </div>
+          <div class="ds-week">
+            <span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span>
+          </div>
+          <div class="ds-rows">
+            <div class="ds-event blue" style="grid-column: 1 / 3; grid-row: 1;">Volga · 12:00</div>
+            <div class="ds-event purple" style="grid-column: 3 / 5; grid-row: 1;">ЗИМ · 10:00</div>
+            <div class="ds-event blue" style="grid-column: 5 / 8; grid-row: 2;">GAZ-21 · 18:00</div>
+          </div>
+        </div>
+        <div class="demo-screen demo-screen--phone" aria-hidden="true">
+          <div class="dp-top">Сегодня</div>
+          <div class="dp-card blue">Volga · 12:00</div>
+          <div class="dp-card purple">ЗИМ · 10:00</div>
+           <div class="dp-card blue">GAZ-21 · 18:00</div>
+        </div>
+      </div>
+      <p class="demo-caption">Календарь бронирований, карточки сделок и напоминания - в одном окне</p>
+    </div>
+  </div>
+</section>
+
+<!-- 5. ЦИФРЫ -->
+<section class="numbers">
+  <div class="container">
+    <div class="numbers-grid">
+      <div><div class="big">0</div><p>потерянных заявок</p></div>
+      <div><div class="big">1</div><p>календарь на весь парк</p></div>
+      <div><div class="big">0</div><p>лишних звонков</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. ОТЗЫВЫ -->
+<section>
+  <div class="container">
+    <div class="section-title"><h2>Что говорят владельцы прокатов</h2></div>
+    <div class="reviews-grid">
+      <article class="card review">
+        <blockquote>«Раньше в сезон путался: две свадьбы на одну дату, машина не готова. Сейчас всё в календаре, робот напоминает клиентам. Спокойно сплю»</blockquote>
+        <div class="who">Андрей<span>Прокат «Ретро-Кортеж», Москва</span></div>
+      </article>
+      <article class="card review">
+        <blockquote>«Держала всё в блокноте и переписках. Заявки терялись. С Битрикс24 впервые за 3 года закрыла сезон без скандалов»</blockquote>
+        <div class="who">Марина<span>«Винтаж-Авто», Казань</span></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- 7. CTA-ФОРМА -->
+<section class="cta" id="form">
+  <div class="container">
+    <div class="cta-grid">
+      <div>
+        <h2>Оставьте заявку. Покажем, как настроить под ваш парк</h2>
+        <p class="lead">Перезвоним в течение часа, покажем интерфейс, ответим на вопросы</p>
+      </div>
+      <div class="form-card" id="formCard">
+        <form id="leadForm" action="https://api.web3forms.com/submit" method="POST" novalidate>
+          <input type="hidden" name="access_key" value="446e1854-1286-4ce9-b722-f8afa115b9e6">
+          <input type="hidden" name="subject" value="Новая заявка с лендинга Битрикс24">
+          <input type="hidden" name="from_name" value="Лендинг Б24 — ретро-авто">
+          
+          <div class="field" id="nameField">
+            <label for="name">Имя</label>
+            <input type="text" id="name" name="name" placeholder="Как к вам обращаться" autocomplete="name">
+            <div class="msg">Укажите имя</div>
+          </div>
+          <div class="field" id="phoneField">
+            <label for="phone">Телефон</label>
+            <input type="tel" id="phone" name="phone" placeholder="+7 900 000-00-00" autocomplete="tel">
+            <div class="msg">Введите номер минимум из 10 цифр</div>
+          </div>
+          <button type="submit" class="btn">Оставить заявку</button>
+        </form>
+        <div class="thanks" role="status">
+          <div class="check" aria-hidden="true">✓</div>
+          <h3>Спасибо!</h3>
+          <p>Перезвоним в течение часа</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 8. ФУТЕР -->
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="logo" src="img/logo-white.svg" alt="Битрикс24">
+        <span class="footer-slogan">Помогает бизнесу работать</span>
+      </div>
+      <div class="contacts">
+        <a href="tel:+78000000000">8 800 000-00-00</a>
+        <a href="mailto:hello@example.ru">hello@example.ru</a>
+      </div>
+      <div class="socials">
+        <a href="https://vk.com/" target="_blank" rel="noopener">VK</a>
+        <a href="https://t.me/" target="_blank" rel="noopener">Telegram</a>
+      </div>
+    </div>
+    <p class="copy">© 2026 Битрикс24. Решение для прокатов ретро-автомобилей</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var form = document.getElementById('leadForm');
+  var card = document.getElementById('formCard');
+  var nameInput = document.getElementById('name');
+  var phoneInput = document.getElementById('phone');
+  var nameField = document.getElementById('nameField');
+  var phoneField = document.getElementById('phoneField');
+
+  function digitsCount(value) {
+    return value.replace(/\D/g, '').length;
+  }
+
+  phoneInput.addEventListener('input', function () {
+    this.value = this.value.replace(/[^\d+\-()\s]/g, '');
+    if (digitsCount(this.value) >= 10) phoneField.classList.remove('error');
+  });
+  nameInput.addEventListener('input', function () {
+    if (this.value.trim()) nameField.classList.remove('error');
+  });
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var ok = true;
+    if (!nameInput.value.trim()) { nameField.classList.add('error'); ok = false; }
+    if (digitsCount(phoneInput.value) < 10) { phoneField.classList.add('error'); ok = false; }
+    if (!ok) {
+      (nameField.classList.contains('error') ? nameInput : phoneInput).focus();
+      return;
+    }
+
+    var formData = new FormData(this);
+    fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      body: formData
+    })
+    .then(function (r) { return r.json(); })
+    .then(function (data) {
+      if (data.success) {
+        card.classList.add('done');
+      } else {
+        alert('Ошибка. Попробуйте ещё раз.');
+      }
+    })
+    .catch(function () {
+      alert('Ошибка сети. Попробуйте ещё раз.');
+    });
+  });
+})();
+</script>
+</body>
+</html>
